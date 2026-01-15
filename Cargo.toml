@@ -1,0 +1,21 @@
+[package]
+name = "ai-mesh-node-reboot-scheduler"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "reboot_scheduler"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1.35", features = ["full"] }
+reqwest = { version = "0.11", features = ["cookies", "json", "rustls-tls"], default-features = false }
+sha2 = "0.10"
+chrono-tz = "0.8"
+chrono = "0.4"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "chrono"] }
+rand = "0.8"
+urlencoding = "2.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
