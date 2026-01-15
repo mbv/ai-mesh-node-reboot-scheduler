@@ -7,13 +7,21 @@ use std::time::Duration;
 use tracing::{error, info, warn};
 
 #[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    // Initialize tracing
+async fn main() {
+    // Initialize tracing first - this ensures all errors are visible
     tracing_subscriber::fmt()
         .with_env_filter("info")
         .with_timer(tracing_subscriber::fmt::time::ChronoUtc::rfc_3339())
         .init();
 
+    if let Err(e) = run().await {
+        eprintln!("Fatal error: {}", e);
+        error!("Fatal error: {}", e);
+        std::process::exit(1);
+    }
+}
+
+async fn run() -> Result<(), Box<dyn std::error::Error>> {
     // Get configuration from environment variables
     let router_ip = std::env::var("ROUTER_IP")
         .map_err(|_| "ROUTER_IP environment variable is required")?;
